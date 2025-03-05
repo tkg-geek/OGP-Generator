@@ -27,7 +27,7 @@ export default async function Page({ params }: Props) {
 
 // 3. generateMetadataもProps型を使用
 export async function generateMetadata(
-  { params, searchParams }: Props
+  { params }: { params: { username: string } }
 ): Promise<Metadata> {
   return {
     title: `${params.username}のOGP画像`,
