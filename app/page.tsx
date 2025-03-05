@@ -12,9 +12,9 @@ export default function Home() {
       ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
       : 'http://localhost:3000';
 
-    // シェアURLを修正（/api/ogではなく、/usernameの形式に）
+    // シェアURLを修正（/usernameではなく、/og?username=xxxの形式に）
     const shareUrl = username 
-      ? `${baseUrl}/${username}`  // 例: https://ogp-generator-five.vercel.app/tkg-geek
+      ? `${baseUrl}/og?username=${username}`  // 例: https://ogp-generator-five.vercel.app/og?username=tkg-geek
       : baseUrl;
 
     const shareText = username 
