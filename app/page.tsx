@@ -1,18 +1,33 @@
 'use client'; // クライアントサイドでの実行を有効化
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function Home() {
-  const baseUrl = 'https://ogp-generator-five.vercel.app';
-  const [username, setUsername] = useState(''); // ユーザー名の状態管理
-  
-  // シェアURLとテキストの作成（ユーザー名を含める）
-  const shareUrl = encodeURIComponent(`${baseUrl}/api/og?username=${username}`);
-  const shareText = encodeURIComponent(`${username}のGitHubプロフィールOGP画像を生成しました！`);
-  const twitterShareUrl = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`;
+  const [username, setUsername] = useState<string>('');
+
+  // シェアボタンの処理を修正
+  const handleShare = () => {
+    const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL 
+      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+      : 'http://localhost:3000';
+
+    // シェアURLを修正（/api/ogではなく、/usernameの形式に）
+    const shareUrl = username 
+      ? `${baseUrl}/${username}`  // 例: https://ogp-generator-five.vercel.app/tkg-geek
+      : baseUrl;
+
+    const shareText = username 
+      ? `${username}さんのGitHubプロフィールOGP画像を生成しました！`
+      : 'GitHubプロフィールからOGP画像を生成できるサービス';
+
+    const xShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
+
+    window.open(xShareUrl, '_blank', 'noopener,noreferrer');
+  };
 
   return (
-    <main>
+    <main className="container mx-auto p-4">
       <h1>OGP Generator</h1>
       
       {/* GitHubユーザー名入力フォーム */}
@@ -60,9 +75,7 @@ export default function Home() {
         {/* シェアボタン */}
         {username && (
           <a
-            href={twitterShareUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={handleShare}
             style={{
               display: 'inline-block',
               padding: '10px 20px',
