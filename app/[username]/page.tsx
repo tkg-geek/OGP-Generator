@@ -1,13 +1,14 @@
 import { Metadata } from 'next'
 import Image from 'next/image'
 
-// 型定義を単純化
+// 1. searchParamsを含めた正しい型定義
 type Props = {
   params: { username: string }
+  searchParams: { [key: string]: string | string[] | undefined }
 }
 
-// ページコンポーネント
-export default function Page({ params }: Props) {
+// 2. ページコンポーネントをasync関数に変更
+export default async function Page({ params }: Props) {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl mb-4">{params.username}のOGP画像</h1>
@@ -24,9 +25,9 @@ export default function Page({ params }: Props) {
   )
 }
 
-// メタデータ生成関数
+// 3. generateMetadataもProps型を使用
 export async function generateMetadata(
-  { params }: Props
+  { params, searchParams }: Props
 ): Promise<Metadata> {
   return {
     title: `${params.username}のOGP画像`,
