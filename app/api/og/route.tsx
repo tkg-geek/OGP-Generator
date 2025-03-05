@@ -98,6 +98,7 @@ export async function GET(request: Request) {
           width="256"
           height="256"
           src={`https://github.com/${username}.png`}
+          alt={`${username}'s GitHub avatar`}
           style={{
             borderRadius: 128,  // 円形に切り取り
           }}

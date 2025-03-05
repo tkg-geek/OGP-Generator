@@ -1,7 +1,7 @@
 'use client'; // クライアントサイドでの実行を有効化
 
 import { useState } from 'react';
-import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
   const [username, setUsername] = useState<string>('');
@@ -28,7 +28,7 @@ export default function Home() {
 
   return (
     <main className="container mx-auto p-4">
-      <h1>OGP Generator</h1>
+      <h1 className="text-2xl font-bold mb-4">OGP Generator</h1>
       
       {/* GitHubユーザー名入力フォーム */}
       <div style={{
@@ -55,49 +55,44 @@ export default function Home() {
           />
         </div>
 
-        {/* プレビュー */}
+        {/* プレビューとシェアボタン */}
         {username && (
-          <div style={{ marginTop: '20px' }}>
-            <p>プレビュー：</p>
-            <img 
+          <div className="mt-8">
+            <h2 className="text-xl font-semibold mb-4">プレビュー</h2>
+            <img
               src={`/api/og?username=${username}`}
-              alt="OGP Preview"
-              style={{
-                maxWidth: '100%',
-                height: 'auto',
-                borderRadius: '5px',
-                marginBottom: '10px'
-              }}
+              alt={`${username}のOGP画像`}
+              style={{ maxWidth: '100%', height: 'auto' }}
             />
+            
+            <a
+              onClick={handleShare}
+              style={{
+                display: 'inline-block',
+                padding: '10px 20px',
+                background: '#1DA1F2',
+                color: 'white',
+                textDecoration: 'none',
+                borderRadius: '5px',
+                fontSize: '14px',
+                marginTop: '10px'
+              }}
+            >
+              X（Twitter）でシェア
+            </a>
           </div>
-        )}
-
-        {/* シェアボタン */}
-        {username && (
-          <a
-            onClick={handleShare}
-            style={{
-              display: 'inline-block',
-              padding: '10px 20px',
-              background: '#1DA1F2',
-              color: 'white',
-              textDecoration: 'none',
-              borderRadius: '5px',
-              fontSize: '14px'
-            }}
-          >
-            X（Twitter）でシェア
-          </a>
         )}
       </div>
 
-      <p>例：</p>
-      <ul>
-        <li><a href="/api/og">デフォルト</a></li>
-        <li><a href="/api/og?username=github">GitHubプロフィール</a></li>
-        <li><a href="/api/og?type=emoji">絵文字バージョン</a></li>
-        <li><a href="/api/og?type=svg">SVGバージョン</a></li>
-      </ul>
+      {/* リンクをaタグからLinkコンポーネントに変更 */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold mb-4">その他の例：</h2>
+        <ul className="space-y-2">
+          <li><Link href="/api/og" className="text-blue-500 hover:underline">デフォルト</Link></li>
+          <li><Link href="/api/og?type=emoji" className="text-blue-500 hover:underline">絵文字バージョン</Link></li>
+          <li><Link href="/api/og?type=svg" className="text-blue-500 hover:underline">SVGバージョン</Link></li>
+        </ul>
+      </div>
     </main>
   );
 } 
