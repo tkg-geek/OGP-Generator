@@ -1,24 +1,23 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'My App',
-  description: 'My App Description',
+  title: 'GitHub Profile OGP',
+  description: 'Generate OGP image with GitHub Profile',
   openGraph: {
-    title: 'My App',
-    description: 'My App Description',
+    title: 'GitHub Profile OGP',
+    description: 'Generate OGP image with GitHub Profile',
     images: [{
-      url: '/api/og',  // 生成したOGP画像のパス
+      url: '/api/og?username=github',  // ← ここにパラメータを追加
       width: 1200,
       height: 630,
-      alt: 'OG Image',
     }],
   },
   // Twitterカードの設定も追加可能
   twitter: {
     card: 'summary_large_image',
-    title: 'My App',
-    description: 'My App Description',
-    images: ['/api/og'],
+    title: 'GitHub Profile OGP',
+    description: 'Generate OGP image with GitHub Profile',
+    images: ['/api/og?username=github'],  // ← ここにパラメータを追加
   },
 }
 
