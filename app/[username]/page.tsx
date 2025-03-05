@@ -1,15 +1,17 @@
 import { Metadata } from 'next'
 import Image from 'next/image'
 
-// URLパラメータの型定義
-type Props = {
+// 型定義を修正
+type PageProps = {
   params: {
     username: string
   }
 }
 
-// メタデータを動的に生成
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+// generateMetadataの型を修正
+export async function generateMetadata(
+  { params }: PageProps
+): Promise<Metadata> {
   const username = params.username
 
   return {
@@ -33,8 +35,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-// ページコンポーネント
-export default function Page({ params }: Props) {
+// ページコンポーネントの型も修正
+export default function Page({ params }: PageProps) {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl mb-4">{params.username}のOGP画像</h1>
