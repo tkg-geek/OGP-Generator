@@ -2,38 +2,8 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
-// 型定義
-type Props = {
-  searchParams: { username?: string }
-}
-
-// メタデータ生成関数
-export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
-  const username = searchParams.username || 'github'
-
-  return {
-    title: `${username}のOGP画像`,
-    description: `${username}のGitHubプロフィールを使用したOGP画像`,
-    openGraph: {
-      title: `${username}のOGP画像`,
-      description: `${username}のGitHubプロフィールを使用したOGP画像`,
-      images: [{
-        url: `/api/og?username=${username}`,
-        width: 1200,
-        height: 630,
-      }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${username}のOGP画像`,
-      description: `${username}のGitHubプロフィールを使用したOGP画像`,
-      images: [`/api/og?username=${username}`],
-    },
-  }
-}
-
-// ページコンポーネント
-export default function Page({ searchParams }: Props) {
+// Next.jsの型システムに依存せず、コンポーネントの引数は型を明示しない
+export default function Page({ searchParams }: { searchParams: { username?: string } }) {
   const username = searchParams.username || 'github'
 
   return (
@@ -55,4 +25,29 @@ export default function Page({ searchParams }: Props) {
       </div>
     </div>
   )
+}
+
+// メタデータ生成関数も同様に型を明示しない
+export async function generateMetadata({ searchParams }: { searchParams: { username?: string } }) {
+  const username = searchParams.username || 'github'
+
+  return {
+    title: `${username}のOGP画像`,
+    description: `${username}のGitHubプロフィールを使用したOGP画像`,
+    openGraph: {
+      title: `${username}のOGP画像`,
+      description: `${username}のGitHubプロフィールを使用したOGP画像`,
+      images: [{
+        url: `/api/og?username=${username}`,
+        width: 1200,
+        height: 630,
+      }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${username}のOGP画像`,
+      description: `${username}のGitHubプロフィールを使用したOGP画像`,
+      images: [`/api/og?username=${username}`],
+    },
+  }
 } 
