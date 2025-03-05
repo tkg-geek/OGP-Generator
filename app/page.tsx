@@ -7,6 +7,7 @@ export default function Home() {
         <li><a href="/api/og">デフォルト</a></li>
         <li><a href="/api/og?username=github">GitHubプロフィール</a></li>
         <li><a href="/api/og?type=emoji">絵文字バージョン</a></li>
+        <li><a href="/api/og?type=svg">SVGバージョン</a></li>
       </ul>
     </main>
   );
