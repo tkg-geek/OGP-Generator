@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 
 // 型定義を修正
-type PageProps = {
+interface Props {
   params: {
     username: string
   }
@@ -10,9 +10,9 @@ type PageProps = {
 
 // generateMetadataの型を修正
 export async function generateMetadata(
-  { params }: PageProps
+  props: Props
 ): Promise<Metadata> {
-  const username = params.username
+  const username = props.params.username
 
   return {
     title: `${username}のOGP画像`,
@@ -35,15 +35,17 @@ export async function generateMetadata(
   }
 }
 
-// ページコンポーネントの型も修正
-export default function Page({ params }: PageProps) {
+// ページコンポーネントを修正
+export default function Page({ params }: Props) {
+  const username = params.username;
+
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl mb-4">{params.username}のOGP画像</h1>
+      <h1 className="text-2xl mb-4">{username}のOGP画像</h1>
       <div style={{ position: 'relative', width: '100%', height: '630px' }}>
         <Image 
-          src={`/api/og?username=${params.username}`}
-          alt={`${params.username}のOGP画像`}
+          src={`/api/og?username=${username}`}
+          alt={`${username}のOGP画像`}
           fill
           style={{ objectFit: 'contain' }}
           priority
